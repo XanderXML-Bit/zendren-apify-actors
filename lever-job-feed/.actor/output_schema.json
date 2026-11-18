@@ -1,0 +1,25 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Lever Job Feed output",
+  "description": "Lever postings in the default dataset, plus a run SUMMARY record in the default key-value store.",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Postings",
+      "description": "All records pushed by the run (default dataset, overview view).",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+    },
+    "salaries": {
+      "type": "string",
+      "title": "Postings with salary",
+      "description": "Dataset view with the published salary ranges.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=salary"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Run summary",
+      "description": "SUMMARY record: count and stop reason per site, region used, filters applied, errors and incremental-mode stats.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/SUMMARY"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "title": "ATS Job Feed input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "companies": {
+      "title": "Companies",
+      "type": "array",
+      "description": "Career-site URLs or `ats:slug` shortcuts. Examples: `https://boards.greenhouse.io/stripe`, `https://jobs.lever.co/spotify`, `https://jobs.ashbyhq.com/ramp`, `https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite`, `greenhouse:stripe`, `lever:spotify`, `ashby:ramp`, `workday:nvidia.wd5/NVIDIAExternalCareerSite`.",
+      "editor": "stringList",
+      "prefill": [
+        "greenhouse:stripe",
+        "lever:spotify",
+        "ashby:ramp",
+        "workday:nvidia.wd5/NVIDIAExternalCareerSite"
+      ]
+    },
+    "keyword": {
+      "title": "Keyword",
+      "type": "string",
+      "description": "Case-insensitive match on job title and department. Words separated by spaces must all match; separate alternatives with commas (`data engineer, analyst`).",
+      "editor": "textfield"
+    },
+    "location": {
+      "title": "Location",
+      "type": "string",
+      "description": "Case-insensitive substring match on the job's location(s), e.g. `London` or `Berlin, Remote`. Comma = OR.",
+      "editor": "textfield"
+    },
+    "remoteOnly": {
+      "title": "Remote only",
+      "type": "boolean",
+      "description": "Only return jobs flagged as remote by the employer.",
+      "default": false
+    },
+    "onlyNewJobs": {
+      "title": "New jobs only (since last run)",
+      "type": "boolean",
+      "description": "Return only jobs this feed has not delivered before, and pay only for those. Ideal for a daily or weekly schedule. The first run returns every matching job and creates the memory; later runs return what appeared since. Filters are applied first. Jobs not delivered because of Max items or your spending limit are returned on the next run. Remembered jobs are forgotten after 90 days without being seen, and at most 200,000 are kept per state key (the least recently seen are dropped first).",
+      "default": false
+    },
+    "stateKey": {
+      "title": "State key (optional)",
+      "type": "string",
+      "description": "Name of the memory used by \"New jobs only\". Leave empty to use one derived from your company list (a different list starts a fresh memory; slugs are case-sensitive, so `greenhouse:Stripe` and `greenhouse:stripe` give different memories). Set your own name to keep the memory when you edit the list, to run several independent feeds over the same companies, or to start over (use a new name). Stored in your account's key-value store `ats-job-feed-state`.",
+      "editor": "textfield"
+    },
+    "maxItems": {
+      "title": "Max items",
+      "type": "integer",
+      "description": "Maximum number of jobs to return (and pay for) in one run; each costs $0.0015, so 20 jobs is a cheap first look. Results are spread evenly across companies. With \"New jobs only\" turned on, this caps the new jobs delivered; jobs that did not fit are delivered on the next run.",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 100000
+    },
+    "includeDescription": {
+      "title": "Include description",
+      "type": "boolean",
+      "description": "Include the job description as plain text. Turning this off is faster for Workday (skips one request per job).",
+      "default": true
+    }
+  },
+  "required": [
+    "companies"
+  ]
+}

@@ -1,0 +1,36 @@
+name: ci
+# Offline tests + dependency audit for every actor on each push/PR. No secrets are used.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {actor: ats-job-feed, python: "3.12"}
+          - {actor: greenhouse-job-feed, python: "3.12"}
+          - {actor: lever-job-feed, python: "3.12"}
+          - {actor: public-pdf-json-chunks, python: "3.11"}
+          - {actor: sitemap-snapshot-audit, python: "3.11"}
+          - {actor: feed-snapshot-delta, python: "3.11"}
+    defaults:
+      run:
+        working-directory: ${{ matrix.actor }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install --require-hashes -r requirements-dev.lock
+      - run: pip install pip-audit
+      - name: offline tests
+        run: python -m pytest -q -m "not live" -p no:cacheprovider
+      - name: dependency audit
+        run: pip-audit -r requirements.txt

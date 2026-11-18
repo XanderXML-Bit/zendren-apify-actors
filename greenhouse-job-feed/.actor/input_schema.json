@@ -1,0 +1,133 @@
+{
+  "title": "Greenhouse Job Feed input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "boards": {
+      "title": "Greenhouse boards",
+      "type": "array",
+      "editor": "stringList",
+      "prefill": [
+        "figma",
+        "dropbox"
+      ],
+      "description": "Board tokens or any Greenhouse board / job URL, one per line. Examples: `figma`, `https://boards.greenhouse.io/figma`, `https://job-boards.greenhouse.io/dropbox/jobs/8159652`, `https://boards.greenhouse.io/embed/job_board?for=figma`. A bad entry is reported in the run SUMMARY and the others still run."
+    },
+    "departments": {
+      "title": "Departments",
+      "type": "array",
+      "editor": "stringList",
+      "sectionCaption": "Filters",
+      "sectionDescription": "All filters are optional and combine with AND.",
+      "description": "Department names to include, one per line (exact name, case-insensitive). A parent department also includes all its child departments, e.g. `Engineering` covers `Backend`. The DEPARTMENTS_OFFICES record of a run lists the names on each board."
+    },
+    "offices": {
+      "title": "Offices",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Office names to include, one per line (exact name, case-insensitive). A parent office includes its child offices, e.g. `North America` covers `USA` and `San Francisco`."
+    },
+    "keyword": {
+      "title": "Keyword",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Case-insensitive match on job title and department names. Words separated by spaces must all match; separate alternatives with commas (`data engineer, analyst`)."
+    },
+    "location": {
+      "title": "Location",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Case-insensitive substring of the job location or an office name, e.g. `London`. Separate alternatives with commas (`berlin, remote`)."
+    },
+    "remoteOnly": {
+      "title": "Remote only",
+      "type": "boolean",
+      "default": false,
+      "description": "Keep only jobs that look remote. Heuristic: the location or an office name contains remote / work from home / WFH / anywhere, the title has a stand-alone `remote`, or a workplace-type custom field says Remote."
+    },
+    "updatedSince": {
+      "title": "Updated since",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Only jobs updated on or after this date. Use a date (`2026-09-01`, UTC if no time is given) or a relative value (`7 days`, `2 weeks`, `12 hours`, `1 month` = 30 days)."
+    },
+    "updatedSinceField": {
+      "title": "Date used by 'Updated since'",
+      "type": "string",
+      "editor": "select",
+      "default": "updatedAt",
+      "enum": [
+        "updatedAt",
+        "firstPublishedAt"
+      ],
+      "enumTitles": [
+        "Last update (updated_at)",
+        "First published (falls back to last update)"
+      ],
+      "description": "`updatedAt` also matches old postings that were edited recently. Choose first published to see only newly posted jobs."
+    },
+    "includeContent": {
+      "title": "Job description",
+      "type": "string",
+      "editor": "select",
+      "default": "text",
+      "sectionCaption": "What to include",
+      "enum": [
+        "none",
+        "text",
+        "html",
+        "markdown"
+      ],
+      "enumTitles": [
+        "None",
+        "Plain text",
+        "HTML",
+        "Markdown"
+      ],
+      "description": "Format of the `content` field. Descriptions are always downloaded with the job list, so `none` only makes the output smaller."
+    },
+    "includePayRanges": {
+      "title": "Pay ranges",
+      "type": "boolean",
+      "default": false,
+      "description": "Add `payRanges` (min, max, currency, title in currency units). Needs one extra request per delivered job, so large runs take longer. Only boards that publish pay transparency data return ranges."
+    },
+    "includeQuestions": {
+      "title": "Application questions",
+      "type": "boolean",
+      "default": false,
+      "description": "Add the application form: `questions` (the main questions), `locationQuestions` (the location question, hidden coordinate fields left out), `complianceQuestions` (compliance groups such as EEOC) and `demographicQuestions` (the demographic survey). Each question has its label, required flag, field type and options. Needs one extra request per delivered job (shared with pay ranges)."
+    },
+    "includeCustomFields": {
+      "title": "Custom fields",
+      "type": "boolean",
+      "default": true,
+      "description": "Add `customFields`: the board's own metadata fields as {name: value} (employment type, level, workplace type, ...). Fields differ per company."
+    },
+    "onlyNewJobs": {
+      "title": "Only new jobs",
+      "type": "boolean",
+      "default": false,
+      "sectionCaption": "Daily feed",
+      "description": "Deliver only jobs not delivered by an earlier run with the same state key, and pay only for those. The first run delivers everything. State lives in the named key-value store `greenhouse-job-feed-state` of your account."
+    },
+    "stateKey": {
+      "title": "State key",
+      "type": "string",
+      "editor": "textfield",
+      "default": "default",
+      "description": "Name of the incremental state. Use a different key per schedule or board set so they do not share their history. Runs with the same key must not overlap: a second run started while another one is still using the key stops with an error."
+    },
+    "maxItems": {
+      "title": "Max items",
+      "type": "integer",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 100000,
+      "description": "Maximum number of jobs to deliver in total (each one is a billed result). Split evenly across boards; a board with fewer jobs hands its unused share to the others."
+    }
+  },
+  "required": [
+    "boards"
+  ]
+}

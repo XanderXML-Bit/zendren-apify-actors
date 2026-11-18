@@ -1,0 +1,77 @@
+{
+  "title": "RSS and Atom Snapshot Normalizer and Delta JSON",
+  "type": "object",
+  "schemaVersion": 1,
+  "additionalProperties": false,
+  "required": [
+    "publicDataOnly"
+  ],
+  "properties": {
+    "publicDataOnly": {
+      "title": "Public non-personal permitted input only",
+      "type": "boolean",
+      "editor": "checkbox",
+      "description": "Keep checked to confirm the documents are public, permitted to process, and contain no personal data. Runs with this unchecked are rejected (not charged). This is a policy acknowledgement, not automated PII detection.",
+      "default": true
+    },
+    "feedUrls": {
+      "title": "Feed URLs",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Public RSS 2.0 or Atom feed URLs (up to 5 in total together with pasted documents). Each feed is fetched by the Actor: at most 1 MiB (gzip accepted, decompressed size also capped), ports 80/443 only, no credentials in the URL, redirects limited to 3, 20-second timeout; URLs resolving to private/internal addresses are refused. Failed fetches are listed in the run summary and are not charged.",
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      },
+      "prefill": [
+        "https://www.python.org/downloads/feed.rss"
+      ]
+    },
+    "knownIds": {
+      "title": "Known IDs (applies to all feed URLs)",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Entry IDs you have already seen (up to 5,000). Entries with these IDs get isNew=false in every fetched feed. Pasted documents carry their own knownIds.",
+      "maxItems": 5000,
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "title": "Pasted documents (optional, up to 5 in total with URLs)",
+      "type": "array",
+      "editor": "json",
+      "description": "Optional. Content you paste directly. Counts toward the 1-5 items per run together with the URL list. 1 MiB XML, 500 input entries, knownIds up to 5,000 strings. RSS 2.0/Atom only. Each entry requires a valid absolute HTTP(S) link. No RDF/RSS 1.0, relative-link resolution, XML entities or DTDs. No article fetching, author data, full descriptions, emails or contacts. Titles and publication dates stay as provided, not inferred. Pricing: $0.003 per successful document + $0.00005/run start. XML entries/PDF chunks are nested, not separately charged. Total input under 8 MB.",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "xml"
+        ],
+        "properties": {
+          "xml": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1048576,
+            "title": "xml",
+            "description": "See documented input limits and public-data policy.",
+            "editor": "textarea"
+          },
+          "knownIds": {
+            "type": "array",
+            "maxItems": 5000,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "title": "knownIds",
+            "description": "See documented input limits and public-data policy.",
+            "editor": "json"
+          }
+        }
+      }
+    }
+  }
+}

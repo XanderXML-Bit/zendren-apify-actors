@@ -1,0 +1,13 @@
+{
+  "apify-actor-start": {
+    "eventTitle": "Actor start",
+    "eventDescription": "Synthetic platform event, charged by Apify itself once per GB of run memory, rounded up with a minimum of one (so always once per run at this Actor's 1,024 MB maximum); includes 5 compute seconds. Not charged by the Actor code.",
+    "eventPriceUsd": 5e-05
+  },
+  "job-scraped": {
+    "eventTitle": "Job result",
+    "eventDescription": "One normalized job record pushed to the dataset.",
+    "eventPriceUsd": 0.0015,
+    "isPrimaryEvent": true
+  }
+}

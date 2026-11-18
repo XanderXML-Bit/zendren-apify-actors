@@ -1,0 +1,85 @@
+{
+  "title": "Public PDF to JSON with Page-Cited RAG Chunks",
+  "type": "object",
+  "schemaVersion": 1,
+  "additionalProperties": false,
+  "required": [
+    "publicDataOnly"
+  ],
+  "properties": {
+    "publicDataOnly": {
+      "title": "Public non-personal permitted input only",
+      "type": "boolean",
+      "editor": "checkbox",
+      "description": "Keep checked to confirm the documents are public, permitted to process, and contain no personal data. Runs with this unchecked are rejected (not charged). This is a policy acknowledgement, not automated PII detection.",
+      "default": true
+    },
+    "pdfUrls": {
+      "title": "PDF URLs",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Public http(s) URLs of text PDFs (up to 5 in total together with pasted documents). Each PDF is fetched by the Actor: at most 1 MiB, ports 80/443 only, no credentials in the URL, redirects limited to 3, 20-second timeout; URLs resolving to private/internal addresses are refused. Failed fetches are listed in the run summary and are not charged. A PDF must have 1-20 pages and extractable text (no OCR).",
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      },
+      "prefill": [
+        "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+      ]
+    },
+    "chunkSize": {
+      "title": "Chunk size for URL PDFs",
+      "type": "integer",
+      "editor": "number",
+      "minimum": 250,
+      "maximum": 4000,
+      "description": "Characters per chunk for fetched PDFs (250-4000, default 1500). Pasted documents set their own chunkSize inside the document object."
+    },
+    "chunkOverlap": {
+      "title": "Chunk overlap for URL PDFs",
+      "type": "integer",
+      "editor": "number",
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "Characters shared between consecutive chunks of fetched PDFs (0-1000, must be less than chunkSize, default 150)."
+    },
+    "documents": {
+      "title": "Pasted documents (optional, up to 5 in total with URLs)",
+      "type": "array",
+      "editor": "json",
+      "description": "Optional. Content you paste directly. Counts toward the 1-5 items per run together with the URL list. 1 MiB decoded PDF, 1-20 pages, 200,000 text characters, chunkSize 250-4,000 and chunkOverlap 0-1,000 (less than chunkSize). Encrypted/malformed PDFs and image-only scans are rejected. No OCR, tables, images, embeddings or metadata/author extraction. Pricing: $0.008 per successful document + $0.00005/run start. XML entries/PDF chunks are nested, not separately charged. Total input under 8 MB.",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pdfBase64"
+        ],
+        "properties": {
+          "pdfBase64": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1398104,
+            "title": "pdfBase64",
+            "description": "See documented input limits and public-data policy.",
+            "editor": "textarea"
+          },
+          "chunkSize": {
+            "type": "integer",
+            "minimum": 250,
+            "maximum": 4000,
+            "title": "chunkSize",
+            "description": "See documented input limits and public-data policy."
+          },
+          "chunkOverlap": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000,
+            "title": "chunkOverlap",
+            "description": "See documented input limits and public-data policy."
+          }
+        }
+      }
+    }
+  }
+}

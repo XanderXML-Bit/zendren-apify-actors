@@ -1,0 +1,17 @@
+{
+  "companies": [
+    "greenhouse:stripe",
+    "https://boards.greenhouse.io/airbnb",
+    "https://jobs.lever.co/spotify",
+    "lever:palantir",
+    "https://jobs.ashbyhq.com/ramp",
+    "ashby:notion",
+    "workday:nvidia.wd5/NVIDIAExternalCareerSite",
+    "https://salesforce.wd12.myworkdayjobs.com/External_Career_Site",
+    "workday:adobe.wd5/external_experienced"
+  ],
+  "keyword": "engineer",
+  "remoteOnly": false,
+  "maxItems": 200,
+  "includeDescription": true
+}

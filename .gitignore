@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.apify/
+node_modules/
+**/storage/datasets/
+**/storage/request_queues/

@@ -1,0 +1,19 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Sitemap audits output",
+  "description": "One dataset item per successfully processed document, plus a run OUTPUT summary (processed count, uncharged errors, spending-limit flag) in the default key-value store.",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Sitemap audits",
+      "description": "Processed documents (default dataset, overview view).",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Run summary",
+      "description": "OUTPUT record: processed count, indexed input errors (not charged) and stoppedForSpendingLimit.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "actorSpecification": 1,
+  "name": "feed-snapshot-delta",
+  "title": "RSS & Atom Feed to JSON with New-Item Detection",
+  "description": "Fetch a public RSS 2.0 or Atom feed by URL (or paste XML) and get clean JSON with stable IDs, dedup and new-item flags vs IDs you've seen. $0.003 per feed.",
+  "version": "0.2",
+  "buildTag": "latest",
+  "dockerfile": "../Dockerfile",
+  "readme": "../README.md",
+  "input": "./INPUT_SCHEMA.json",
+  "defaultMemoryMbytes": 256,
+  "minMemoryMbytes": 256,
+  "maxMemoryMbytes": 256,
+  "usesStandbyMode": false,
+  "output": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  }
+}

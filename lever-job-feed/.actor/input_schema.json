@@ -1,0 +1,128 @@
+{
+  "title": "Lever Job Feed input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "sites": {
+      "title": "Lever sites",
+      "type": "array",
+      "description": "Lever site names or any Lever URL. A site name is the last part of `jobs.lever.co/<site>`. Accepted: `spotify`, `https://jobs.lever.co/zoox`, `https://jobs.eu.lever.co/pnlfin`, and posting or `/apply` URLs (reduced to their site). Invalid entries are reported in the run SUMMARY and skipped.",
+      "editor": "stringList",
+      "prefill": ["spotify", "zoox", "https://jobs.eu.lever.co/pnlfin"]
+    },
+    "region": {
+      "title": "Lever region",
+      "type": "string",
+      "description": "Which Lever instance to read. Auto uses the host of a pasted URL; for a plain site name it tries the global instance first and the EU instance when the global one answers 404.",
+      "enum": ["auto", "global", "eu"],
+      "enumTitles": ["Auto (URL host, else global then EU)", "Global (api.lever.co)", "EU (api.eu.lever.co)"],
+      "default": "auto"
+    },
+    "teams": {
+      "title": "Teams (server-side)",
+      "type": "array",
+      "description": "Exact Lever team names. Sent to Lever, so other postings are never downloaded. Case-insensitive, whole value, several values = OR. Run with 'Discover filters' to list the exact values of a site.",
+      "editor": "stringList",
+      "sectionCaption": "Server-side filters",
+      "sectionDescription": "Applied by Lever itself. Different fields combine with AND, several values inside one field with OR. Use the exact values shown by 'Discover filters'."
+    },
+    "departments": {
+      "title": "Departments (server-side)",
+      "type": "array",
+      "description": "Exact Lever department names (case-insensitive, whole value, OR).",
+      "editor": "stringList"
+    },
+    "locations": {
+      "title": "Locations (server-side)",
+      "type": "array",
+      "description": "Exact Lever location names such as `London` or `New York, NY`. Case-sensitive. Matches any of a posting's locations. Several values = OR.",
+      "editor": "stringList"
+    },
+    "commitments": {
+      "title": "Commitments (server-side)",
+      "type": "array",
+      "description": "Exact commitment names such as `Full-time`, `Permanent`, `Contract` (case-insensitive, OR). The wording differs per company.",
+      "editor": "stringList"
+    },
+    "levels": {
+      "title": "Levels (server-side)",
+      "type": "array",
+      "description": "Exact level names, for the companies that use them (case-insensitive, OR).",
+      "editor": "stringList"
+    },
+    "keyword": {
+      "title": "Keyword",
+      "type": "string",
+      "description": "Case-insensitive match on title, team and department. Words separated by spaces must all match; separate alternatives with commas (`data engineer, analyst`).",
+      "editor": "textfield",
+      "sectionCaption": "Filters applied by the Actor"
+    },
+    "workplaceTypes": {
+      "title": "Workplace types",
+      "type": "array",
+      "description": "Keep only postings with one of these workplace types. Leave empty for all.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": ["remote", "hybrid", "on-site", "unspecified"],
+        "enumTitles": ["Remote", "Hybrid", "On-site", "Unspecified"]
+      }
+    },
+    "postedSince": {
+      "title": "Posted since",
+      "type": "string",
+      "description": "Only postings created on or after this moment. A date (`2026-10-01`), an ISO timestamp, or a relative value such as `7 days`, `2 weeks`, `36 hours`, `1 month`.",
+      "editor": "textfield"
+    },
+    "salaryOnly": {
+      "title": "Only postings with a published salary",
+      "type": "boolean",
+      "description": "Keep only postings where the employer published a salary range.",
+      "default": false
+    },
+    "descriptionFormat": {
+      "title": "Description format",
+      "type": "string",
+      "description": "Format of the opening, description, additional and salaryDescription fields. Choose None for the smallest output.",
+      "enum": ["none", "text", "html", "markdown"],
+      "enumTitles": ["None", "Plain text", "HTML", "Markdown"],
+      "default": "text",
+      "sectionCaption": "Output"
+    },
+    "includeLists": {
+      "title": "Include requirement lists",
+      "type": "boolean",
+      "description": "Add the posting's sections (for example 'What you'll do', 'Who you are') as `lists`: `[{heading, items[]}]` with plain-text items.",
+      "default": true
+    },
+    "discoverFilters": {
+      "title": "Discover filters",
+      "type": "boolean",
+      "description": "Instead of postings, output one record per site with its distinct teams, departments, locations, commitments, levels and workplace types and how many postings each has. Server-side filters still apply; keyword, workplace type, posted-since, salary and incremental options are ignored. One Job result is charged per site record (not per posting), counts against your maximum charge like any record, and a site that fails costs nothing.",
+      "default": false
+    },
+    "onlyNewJobs": {
+      "title": "Only new postings",
+      "type": "boolean",
+      "description": "Deliver only postings that earlier runs with the same state key have not delivered. The first run delivers everything. Remembered postings are kept in the named key-value store `lever-job-feed-state` (at most 200,000 per state key, least recently seen dropped first) and forgotten after 90 days off the board. A run stops with an error if another run of the same state key is still running.",
+      "default": false,
+      "sectionCaption": "Daily feed and limits"
+    },
+    "stateKey": {
+      "title": "State key",
+      "type": "string",
+      "description": "Names the remembered set for 'Only new postings'. Use a different key for each distinct schedule or filter setup, and do not run two schedules with the same key at the same time.",
+      "editor": "textfield",
+      "default": "default"
+    },
+    "maxItems": {
+      "title": "Max items",
+      "type": "integer",
+      "description": "Maximum number of postings in total, newest first, split evenly across sites (a site with fewer postings hands its unused share to the others).",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 100000
+    }
+  },
+  "required": ["sites"]
+}

@@ -1,0 +1,13 @@
+{
+  "apify-actor-start": {
+    "eventTitle": "Actor start",
+    "eventDescription": "Synthetic platform event, charged by Apify itself once per GB of run memory, rounded up with a minimum of one (so always once per run at this Actor's 1,024 MB maximum); includes 5 compute seconds. Not charged by the Actor code.",
+    "eventPriceUsd": 0.00005
+  },
+  "job": {
+    "eventTitle": "Job result",
+    "eventDescription": "One Lever posting (or, with discoverFilters, one filter record per site, not per posting) pushed to the dataset.",
+    "isPrimaryEvent": true,
+    "eventPriceUsd": 0.0015
+  }
+}

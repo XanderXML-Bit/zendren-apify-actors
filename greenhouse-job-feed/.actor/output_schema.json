@@ -1,0 +1,31 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Greenhouse Job Feed output",
+  "description": "Jobs in the default dataset, a run SUMMARY and the department/office trees in the default key-value store.",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Jobs",
+      "description": "All jobs delivered by the run (default dataset, overview view).",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+    },
+    "payRanges": {
+      "type": "string",
+      "title": "Jobs with pay ranges",
+      "description": "Same dataset, pay view (filled when includePayRanges is on).",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=pay"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Run summary",
+      "description": "SUMMARY record: per-board count and reason, board names, errors, incremental stats.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/SUMMARY"
+    },
+    "departmentsOffices": {
+      "type": "string",
+      "title": "Departments and offices",
+      "description": "DEPARTMENTS_OFFICES record: the department and office trees of every board read, with open-job counts, to help pick the departments and offices filters.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/DEPARTMENTS_OFFICES"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "ATS Job Feed output",
+  "description": "Normalized job listings in the default dataset, plus a run SUMMARY record in the default key-value store.",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Jobs",
+      "description": "All job listings pushed by the run (default dataset, overview view).",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=overview"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Run summary",
+      "description": "SUMMARY record: counts per company, failed companies and, in New jobs only mode, how many jobs were new or skipped as already seen.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/SUMMARY"
+    }
+  }
+}

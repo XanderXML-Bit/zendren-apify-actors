@@ -1,0 +1,293 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "jobId": {
+        "type": "integer",
+        "description": "Greenhouse job post id (the number in the job URL and gh_jid)."
+      },
+      "internalJobId": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "description": "Greenhouse internal job id (the job, not the post; one job can have several posts)."
+      },
+      "requisitionId": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Requisition id set by the employer, if any."
+      },
+      "title": {
+        "type": "string",
+        "description": "Job title."
+      },
+      "boardToken": {
+        "type": "string",
+        "description": "Greenhouse board token (lower case); with jobId it identifies the job."
+      },
+      "companyName": {
+        "type": "string",
+        "description": "Company name as published on the board."
+      },
+      "location": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Location text shown on the posting."
+      },
+      "offices": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Names of the offices the job is attached to."
+      },
+      "officePath": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Hierarchy path of the first office, root to leaf, e.g. North America > USA > San Francisco."
+      },
+      "departments": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Names of the departments the job belongs to."
+      },
+      "departmentPath": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Hierarchy path of the first department, root to leaf."
+      },
+      "remote": {
+        "type": "boolean",
+        "description": "Heuristic: location or office says remote / work from home / WFH / anywhere, the title has a stand-alone 'remote', or a workplace-type custom field says Remote."
+      },
+      "absoluteUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Public job URL as returned by Greenhouse (often the company's own careers page with gh_jid)."
+      },
+      "applyUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Greenhouse-hosted job URL job-boards.greenhouse.io/<token>/jobs/<id>; it redirects to the company page when the board is embedded there."
+      },
+      "updatedAt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Last update of the posting (ISO 8601 with offset)."
+      },
+      "firstPublishedAt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "When the posting was first published (ISO 8601), if the board reports it."
+      },
+      "language": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Posting language code, e.g. en."
+      },
+      "content": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Job description in the format chosen by includeContent (text, html or markdown). Absent when includeContent is none."
+      },
+      "payRanges": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "description": "Only with includePayRanges. List of {min, max, currency, title, description} in currency units (not cents); empty list = none published, null = the detail request failed.",
+        "items": {
+          "type": "object"
+        }
+      },
+      "customFields": {
+        "type": "object",
+        "description": "The board's custom fields as {name: value}; values keep their type (string, list, boolean, null). Absent when includeCustomFields is off."
+      },
+      "questions": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "description": "Only with includeQuestions. Main application form fields: {label, required, type, name, description, options[{label,value}]}; null = the detail request failed.",
+        "items": {
+          "type": "object"
+        }
+      },
+      "locationQuestions": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "description": "Only with includeQuestions. The form's location question(s), same shape as questions, without the hidden latitude/longitude fields; null = the detail request failed.",
+        "items": {
+          "type": "object"
+        }
+      },
+      "complianceQuestions": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "description": "Only with includeQuestions. Compliance question groups (for example EEOC): {type, description, questions[...]} with questions shaped like questions; empty list = none; null = the detail request failed.",
+        "items": {
+          "type": "object"
+        }
+      },
+      "demographicQuestions": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "description": "Only with includeQuestions. The demographic survey: {header, description, questions[{id,label,required,type,options[{label,value,freeForm}]}]}; null = none published or the detail request failed."
+      },
+      "scrapedAt": {
+        "type": "string",
+        "description": "When the record was produced (ISO 8601, UTC)."
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Jobs",
+      "transformation": {
+        "fields": [
+          "title",
+          "companyName",
+          "location",
+          "remote",
+          "departments",
+          "offices",
+          "updatedAt",
+          "applyUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "Title"
+          },
+          "companyName": {
+            "label": "Company"
+          },
+          "location": {
+            "label": "Location"
+          },
+          "remote": {
+            "label": "Remote",
+            "format": "boolean"
+          },
+          "departments": {
+            "label": "Departments",
+            "format": "array"
+          },
+          "offices": {
+            "label": "Offices",
+            "format": "array"
+          },
+          "updatedAt": {
+            "label": "Updated",
+            "format": "date"
+          },
+          "applyUrl": {
+            "label": "Apply",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "pay": {
+      "title": "Pay ranges",
+      "transformation": {
+        "fields": [
+          "title",
+          "companyName",
+          "location",
+          "payRanges",
+          "applyUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "Title"
+          },
+          "companyName": {
+            "label": "Company"
+          },
+          "location": {
+            "label": "Location"
+          },
+          "payRanges": {
+            "label": "Pay ranges",
+            "format": "array"
+          },
+          "applyUrl": {
+            "label": "Apply",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "hierarchy": {
+      "title": "Departments and offices",
+      "transformation": {
+        "fields": [
+          "title",
+          "companyName",
+          "departmentPath",
+          "officePath",
+          "location"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "Title"
+          },
+          "companyName": {
+            "label": "Company"
+          },
+          "departmentPath": {
+            "label": "Department path",
+            "format": "array"
+          },
+          "officePath": {
+            "label": "Office path",
+            "format": "array"
+          },
+          "location": {
+            "label": "Location"
+          }
+        }
+      }
+    }
+  }
+}

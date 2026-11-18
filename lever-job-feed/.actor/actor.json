@@ -1,0 +1,22 @@
+{
+  "actorSpecification": 1,
+  "name": "lever-job-feed",
+  "title": "Lever Job Feed – Filters, Salary & EU Sites",
+  "description": "Job postings from any company that hires through Lever, from Lever's public Postings API. Server-side team, department, location and commitment filters, salary ranges, workplace type, EU instance support, requirement lists and a daily new-postings mode. $0.0015 per job; 20 jobs cost $0.03005.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "dockerfile": "../Dockerfile",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "defaultMemoryMbytes": 512,
+  "minMemoryMbytes": 256,
+  "maxMemoryMbytes": 1024,
+  "readme": "../README.md",
+  "changelog": "../CHANGELOG.md",
+  "environmentVariables": {
+    "CHARGING_ENABLED": "1"
+  },
+  "output": "./output_schema.json"
+}

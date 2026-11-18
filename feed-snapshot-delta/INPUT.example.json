@@ -1,0 +1,6 @@
+{
+  "publicDataOnly": true,
+  "feedUrls": [
+    "https://www.python.org/downloads/feed.rss"
+  ]
+}

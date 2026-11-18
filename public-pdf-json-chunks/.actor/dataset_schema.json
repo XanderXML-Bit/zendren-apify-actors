@@ -1,0 +1,56 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "documentIndex": {
+        "type": "integer"
+      },
+      "kind": {
+        "type": "string"
+      },
+      "sha256": {
+        "type": "string"
+      },
+      "pageCount": {
+        "type": "integer"
+      },
+      "characterCount": {
+        "type": "integer"
+      },
+      "pages": {
+        "type": "array"
+      },
+      "chunks": {
+        "type": "array"
+      },
+      "sourceUrl": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "fetchedUrls": {
+        "type": "integer"
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": [
+          "documentIndex",
+          "sourceUrl",
+          "pageCount",
+          "characterCount",
+          "chunks",
+          "sha256"
+        ]
+      },
+      "display": {
+        "component": "table"
+      }
+    }
+  }
+}

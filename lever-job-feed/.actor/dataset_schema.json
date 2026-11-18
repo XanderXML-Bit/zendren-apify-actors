@@ -1,0 +1,507 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "postingId": {
+        "type": "string",
+        "description": "Lever posting id (UUID). Unique within a site."
+      },
+      "title": {
+        "type": "string",
+        "description": "Posting title."
+      },
+      "site": {
+        "type": "string",
+        "description": "Lever site name, the path segment in jobs.lever.co/<site>."
+      },
+      "region": {
+        "type": "string",
+        "description": "Lever instance that served the site: global or eu."
+      },
+      "team": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Team (Lever category)."
+      },
+      "department": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Department (Lever category)."
+      },
+      "location": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Primary location."
+      },
+      "allLocations": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Every location of the posting, primary location first, each once."
+      },
+      "country": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Two-letter country code reported by Lever."
+      },
+      "commitment": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Commitment, e.g. Full-time, Permanent, Contract."
+      },
+      "level": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Level, when the employer uses it."
+      },
+      "workplaceType": {
+        "type": "string",
+        "description": "remote, hybrid, on-site or unspecified."
+      },
+      "remote": {
+        "type": "boolean",
+        "description": "True when workplaceType is remote."
+      },
+      "salary": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "description": "Published salary range: min, max, currency (ISO code), interval (usually year, month, week, day or hour; other Lever intervals pass through lower-cased, e.g. biweekly or one-time; null when Lever gives none). Null when the employer publishes no range.",
+        "properties": {
+          "min": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "max": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "interval": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "salaryText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Readable range such as 'USD 123,000–168,000 per year'."
+      },
+      "salaryDescription": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "The employer's own pay note, in the chosen descriptionFormat."
+      },
+      "hostedUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Public posting page on jobs.lever.co."
+      },
+      "applyUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Direct application URL."
+      },
+      "createdAt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "When the posting was created (ISO 8601, UTC)."
+      },
+      "opening": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Opening paragraph, in the chosen descriptionFormat (often empty at the source)."
+      },
+      "description": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Main description body without the opening, in the chosen descriptionFormat (null for an opening-only posting)."
+      },
+      "additional": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Closing section (benefits, equal-opportunity text), in the chosen descriptionFormat."
+      },
+      "lists": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "description": "Requirement/responsibility sections: [{heading, items[]}] with plain-text items. Null when includeLists is off.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "heading": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "scrapedAt": {
+        "type": "string",
+        "description": "When the run read the posting (ISO 8601, UTC)."
+      },
+      "recordType": {
+        "type": "string",
+        "description": "Only on discoverFilters records: 'filters'."
+      },
+      "totalPostings": {
+        "type": "integer",
+        "description": "discoverFilters: postings Lever returned for the site, after any server-side filters you set (team, department, location, commitment, level); the whole board when none are set."
+      },
+      "teams": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            }
+          }
+        },
+        "description": "discoverFilters: distinct teams and posting counts."
+      },
+      "departments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            }
+          }
+        },
+        "description": "discoverFilters: distinct departments and posting counts."
+      },
+      "locations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            }
+          }
+        },
+        "description": "discoverFilters: distinct locations (every location of a posting counts) and posting counts."
+      },
+      "commitments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            }
+          }
+        },
+        "description": "discoverFilters: distinct commitments and posting counts."
+      },
+      "levels": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            }
+          }
+        },
+        "description": "discoverFilters: distinct levels and posting counts."
+      },
+      "workplaceTypes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            }
+          }
+        },
+        "description": "discoverFilters: workplace types and posting counts."
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "description": "One row per posting.",
+      "transformation": {
+        "fields": [
+          "title",
+          "site",
+          "team",
+          "department",
+          "location",
+          "workplaceType",
+          "commitment",
+          "salaryText",
+          "createdAt",
+          "hostedUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "title"
+          },
+          "site": {
+            "label": "site"
+          },
+          "team": {
+            "label": "team"
+          },
+          "department": {
+            "label": "department"
+          },
+          "location": {
+            "label": "location"
+          },
+          "workplaceType": {
+            "label": "workplaceType"
+          },
+          "commitment": {
+            "label": "commitment"
+          },
+          "salaryText": {
+            "label": "salaryText"
+          },
+          "createdAt": {
+            "label": "createdAt",
+            "format": "date"
+          },
+          "hostedUrl": {
+            "label": "hostedUrl",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "salary": {
+      "title": "Salary",
+      "description": "Postings that publish a salary range.",
+      "transformation": {
+        "fields": [
+          "title",
+          "site",
+          "location",
+          "salary",
+          "salaryText",
+          "workplaceType",
+          "hostedUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "title"
+          },
+          "site": {
+            "label": "site"
+          },
+          "location": {
+            "label": "location"
+          },
+          "salary": {
+            "label": "salary",
+            "format": "object"
+          },
+          "salaryText": {
+            "label": "salaryText"
+          },
+          "workplaceType": {
+            "label": "workplaceType"
+          },
+          "hostedUrl": {
+            "label": "hostedUrl",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "details": {
+      "title": "Details",
+      "description": "Descriptions and requirement lists.",
+      "transformation": {
+        "fields": [
+          "title",
+          "site",
+          "level",
+          "country",
+          "allLocations",
+          "opening",
+          "description",
+          "lists",
+          "additional",
+          "applyUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "title"
+          },
+          "site": {
+            "label": "site"
+          },
+          "level": {
+            "label": "level"
+          },
+          "country": {
+            "label": "country"
+          },
+          "allLocations": {
+            "label": "allLocations",
+            "format": "array"
+          },
+          "opening": {
+            "label": "opening"
+          },
+          "description": {
+            "label": "description"
+          },
+          "lists": {
+            "label": "lists",
+            "format": "array"
+          },
+          "additional": {
+            "label": "additional"
+          },
+          "applyUrl": {
+            "label": "applyUrl",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "filterDiscovery": {
+      "title": "Filter discovery",
+      "description": "discoverFilters records: exact team, department, location and commitment values.",
+      "transformation": {
+        "fields": [
+          "site",
+          "region",
+          "totalPostings",
+          "teams",
+          "departments",
+          "locations",
+          "commitments",
+          "levels",
+          "workplaceTypes"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "site": {
+            "label": "site"
+          },
+          "region": {
+            "label": "region"
+          },
+          "totalPostings": {
+            "label": "totalPostings"
+          },
+          "teams": {
+            "label": "teams",
+            "format": "array"
+          },
+          "departments": {
+            "label": "departments",
+            "format": "array"
+          },
+          "locations": {
+            "label": "locations",
+            "format": "array"
+          },
+          "commitments": {
+            "label": "commitments",
+            "format": "array"
+          },
+          "levels": {
+            "label": "levels",
+            "format": "array"
+          },
+          "workplaceTypes": {
+            "label": "workplaceTypes",
+            "format": "array"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "documentIndex": {
+        "type": "integer"
+      },
+      "kind": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "entryCount": {
+        "type": "integer"
+      },
+      "newCount": {
+        "type": "integer"
+      },
+      "duplicateCount": {
+        "type": "integer"
+      },
+      "entries": {
+        "type": "array"
+      },
+      "sha256": {
+        "type": "string"
+      },
+      "fetchedUrls": {
+        "type": "integer"
+      },
+      "sourceUrl": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": [
+          "documentIndex",
+          "sourceUrl",
+          "type",
+          "entryCount",
+          "newCount",
+          "duplicateCount",
+          "entries"
+        ]
+      },
+      "display": {
+        "component": "table"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "actorSpecification": 1,
+  "name": "ats-job-feed",
+  "title": "Greenhouse, Lever, Ashby, Workday Jobs Scraper API",
+  "description": "Scrape open jobs from Greenhouse, Lever, Ashby and Workday career sites into clean JSON or CSV. Filter by keyword, location or remote. New jobs only mode on a daily schedule pays just for fresh postings. $0.0015 per job; 20 jobs cost $0.03005.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "dockerfile": "../Dockerfile",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "minMemoryMbytes": 256,
+  "defaultMemoryMbytes": 1024,
+  "maxMemoryMbytes": 1024,
+  "readme": "../STORE_README.md",
+  "changelog": "../CHANGELOG.md",
+  "environmentVariables": {
+    "CHARGING_ENABLED": "1"
+  },
+  "output": "./output_schema.json"
+}

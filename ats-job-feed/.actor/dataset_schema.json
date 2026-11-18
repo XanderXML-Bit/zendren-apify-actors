@@ -1,0 +1,157 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string",
+        "description": "Job title."
+      },
+      "company": {
+        "type": "string",
+        "description": "Company name."
+      },
+      "location": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Primary location."
+      },
+      "remote": {
+        "type": "boolean",
+        "description": "Whether the job is remote."
+      },
+      "department": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Primary department."
+      },
+      "postedDate": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Posting/updated date (ISO 8601) as reported by the ATS."
+      },
+      "applyUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Apply URL."
+      },
+      "atsSource": {
+        "type": "string",
+        "description": "Source ATS: greenhouse, lever, ashby or workday."
+      },
+      "descriptionText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Plain-text description (null if descriptions disabled)."
+      },
+      "jobId": {
+        "type": "string",
+        "description": "ATS job id."
+      },
+      "salary": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "description": "Salary info when published by the ATS."
+      },
+      "jobUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Public job page URL."
+      },
+      "employmentType": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Employment type, if provided."
+      },
+      "locations": {
+        "type": "array",
+        "description": "All listed locations.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "companySlug": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "ATS company slug/board token."
+      },
+      "departments": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Every department the posting belongs to (department is the first)."
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Jobs",
+      "transformation": {
+        "fields": [
+          "title",
+          "company",
+          "location",
+          "remote",
+          "department",
+          "postedDate",
+          "atsSource",
+          "applyUrl",
+          "salary"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "Title"
+          },
+          "company": {
+            "label": "Company"
+          },
+          "location": {
+            "label": "Location"
+          },
+          "remote": {
+            "label": "Remote",
+            "format": "boolean"
+          },
+          "department": {
+            "label": "Department"
+          },
+          "postedDate": {
+            "label": "Posted"
+          },
+          "atsSource": {
+            "label": "ATS"
+          },
+          "applyUrl": {
+            "label": "Apply",
+            "format": "link"
+          },
+          "salary": {
+            "label": "Salary"
+          }
+        }
+      }
+    }
+  }
+}

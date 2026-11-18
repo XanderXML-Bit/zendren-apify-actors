@@ -1,0 +1,22 @@
+{
+  "actorSpecification": 1,
+  "name": "greenhouse-job-feed",
+  "title": "Greenhouse Job Feed – Pay Ranges & Departments",
+  "description": "Public Greenhouse job boards as clean JSON: pay ranges, department and office hierarchy, custom fields, application questions and a new-jobs-only daily mode. $0.0015 per job; 20 jobs cost $0.03005. Uses the official Job Board API, no HTML scraping.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "dockerfile": "../Dockerfile",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "minMemoryMbytes": 256,
+  "defaultMemoryMbytes": 1024,
+  "maxMemoryMbytes": 1024,
+  "readme": "../README.md",
+  "changelog": "../CHANGELOG.md",
+  "environmentVariables": {
+    "CHARGING_ENABLED": "1"
+  },
+  "output": "./output_schema.json"
+}

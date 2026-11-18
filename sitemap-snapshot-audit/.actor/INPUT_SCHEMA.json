@@ -1,0 +1,62 @@
+{
+  "title": "Sitemap Snapshot Audit and Change Diff to JSON",
+  "type": "object",
+  "schemaVersion": 1,
+  "additionalProperties": false,
+  "required": [
+    "publicDataOnly"
+  ],
+  "properties": {
+    "publicDataOnly": {
+      "title": "Public non-personal permitted input only",
+      "type": "boolean",
+      "editor": "checkbox",
+      "description": "Keep checked to confirm the documents are public, permitted to process, and contain no personal data. Runs with this unchecked are rejected (not charged). This is a policy acknowledgement, not automated PII detection.",
+      "default": true
+    },
+    "sitemapUrls": {
+      "title": "Sitemap URLs",
+      "type": "array",
+      "editor": "json",
+      "description": "Public sitemap.xml locations (urlset or sitemapindex, up to 5 in total together with pasted documents). Each entry is a URL string or an object {\"url\": \"https://...\", \"previousUrl\": \"https://...\"}; previousUrl is an optional older snapshot URL (e.g. an archived copy) to diff against. Each file is fetched by the Actor: at most 1 MiB (gzip accepted, decompressed size also capped), ports 80/443 only, no credentials in the URL, redirects limited to 3, 20-second timeout; URLs resolving to private/internal addresses are refused. Index sitemaps list their children and are never followed. Failed fetches are listed in the run summary and are not charged.",
+      "maxItems": 5,
+      "prefill": [
+        {
+          "url": "https://www.sitemaps.org/sitemap.xml"
+        }
+      ]
+    },
+    "documents": {
+      "title": "Pasted documents (optional, up to 5 in total with URLs)",
+      "type": "array",
+      "editor": "json",
+      "description": "Optional. Content you paste directly. Counts toward the 1-5 items per run together with the URL list. 1 MiB per XML snapshot, up to 5,000 entries each. Standard namespaced urlset/sitemapindex only. No gzip, sitemap recursion, live status requests or XML entities/DTDs. Index results list child sitemap references, never fetch them. previousXml is optional; types must match. Pricing: $0.005 per successful document + $0.00005/run start. XML entries/PDF chunks are nested, not separately charged. Total input under 8 MB.",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "xml"
+        ],
+        "properties": {
+          "xml": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1048576,
+            "title": "xml",
+            "description": "See documented input limits and public-data policy.",
+            "editor": "textarea"
+          },
+          "previousXml": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1048576,
+            "title": "previousXml",
+            "description": "See documented input limits and public-data policy.",
+            "editor": "textarea"
+          }
+        }
+      }
+    }
+  }
+}
