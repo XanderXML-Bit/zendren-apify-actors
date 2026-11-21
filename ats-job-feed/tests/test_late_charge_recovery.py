@@ -13,7 +13,7 @@ import pytest
 import src.main as main_mod
 from src.main import run
 from tests.fakes import Platform
-from tests.test_review3 import INP, PRICES, SplitActor, SplitChargingManager, fake_source  # noqa: F401
+from tests.test_charge_failures_and_live_notes import INP, PRICES, SplitActor, SplitChargingManager, fake_source  # noqa: F401
 
 
 class Deferred:

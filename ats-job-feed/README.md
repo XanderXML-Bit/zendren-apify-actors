@@ -23,7 +23,7 @@ src/ats/               importable, Apify-free core
   filters.py text.py models.py
 .actor/                actor.json, input_schema.json, dataset_schema.json, output_schema.json, pay_per_event.json
 tests/test_incremental.py   offline tests for onlyNewJobs (state, pruning, maxItems/budget leftovers, restarts, stateKey)
-tests/test_review8.py       offline tests: unconfirmed charges stay out of the state, Workday id stability, record-key collisions, entry cap
+tests/test_incremental_state_integrity.py  offline tests: unconfirmed charges stay out of the state, Workday id stability, record-key collisions, entry cap
 tests/test_pricing_shapes.py  offline tests: previous pricing (custom actor-start) and current pricing (apify-actor-start)
 tests/test_unit.py     offline tests (URL parsing, filters, normalizers, retry logic, pipeline)
 tests/test_fairness.py  offline tests (fair maxItems split, redistribution, SUMMARY.perCompany reasons, restarts)
