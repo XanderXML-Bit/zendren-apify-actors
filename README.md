@@ -25,9 +25,23 @@ Check its Store page before a platform run, which can incur charges.
 
 ![Actual offline feed transformation output, including entry and new-item counts, from the committed Python releases fixture.](docs/feed-output.png)
 
-The image shows the real feed parser's output from the committed fixture, not a live Store run.
-It uses no token, makes no network request, and incurs no platform charge.
-[Capture provenance](docs/claims.md) records its source and reproduction command.
+After [local setup](#set-up-a-local-actor), run the feed parser against the committed fixture from `feed-snapshot-delta/`.
+
+```sh
+.venv/bin/python -c 'import json; from pathlib import Path; from transform import feed_document; fixture = json.loads(Path("tests/fixtures/inline_example.json").read_text()); print(json.dumps(feed_document(fixture["documents"][0]), indent=2))'
+```
+
+The command prints the full JSON, including these two fields.
+
+```json
+{
+  "entryCount": 10,
+  "newCount": 7
+}
+```
+
+The parser uses no token, makes no network request, and incurs no platform charge.
+See the [capture provenance](docs/claims.md) for details on the screenshot.
 
 ## Check the stack
 
@@ -44,7 +58,7 @@ Each actor directory contains its own Dockerfile, Apify schemas, and dependency 
 The PDF, sitemap, and feed actors each include a copy of `fetcher.py`.
 Its server-side request forgery (SSRF) guard rejects non-public addresses and checks every redirect before connecting.
 Each Docker build uses its actor directory as the build context.
-Keeping a copy of the fetcher in each directory puts the guard in every image that needs it.
+CI checks that all three copies match byte for byte.
 
 ## Set up a local actor
 
@@ -92,17 +106,6 @@ From the repository root, run Ruff to check for problems such as unused imports 
 ```sh
 uvx --from ruff==0.17.6 ruff check .
 ```
-
-## Run the offline feed example
-
-From `feed-snapshot-delta/`, run the real parser against its committed fixture.
-
-```sh
-.venv/bin/python -c 'import json; from pathlib import Path; from transform import feed_document; fixture = json.loads(Path("tests/fixtures/inline_example.json").read_text()); print(json.dumps(feed_document(fixture["documents"][0]), indent=2))'
-```
-
-This command runs the feed transformation only.
-It does not emulate Apify storage or platform charging.
 
 ## Deployment
 
