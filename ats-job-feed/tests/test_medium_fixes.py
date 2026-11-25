@@ -2,8 +2,6 @@
 
 import asyncio
 
-import pytest
-
 from src.ats import CompanyRef, Job, JobFilter, RunReport, greenhouse, workday
 from src.ats.models import AtsError
 from src.pipeline import iter_jobs

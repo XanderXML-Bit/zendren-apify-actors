@@ -7,7 +7,6 @@ only follows a charge whose response arrived.
 
 import asyncio
 from decimal import Decimal as D
-from types import SimpleNamespace
 
 import pytest
 

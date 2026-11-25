@@ -6,7 +6,6 @@ restart either (job charges stay <= rows, the start fee stays <= 1).
 """
 
 from decimal import Decimal as D
-from types import SimpleNamespace
 
 import pytest
 
