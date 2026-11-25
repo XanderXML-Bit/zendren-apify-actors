@@ -8,7 +8,7 @@ import pytest
 import src.incremental as inc
 import src.main as main_mod
 import src.pipeline as pl
-from src.ats import CompanyRef, Job, JobFilter, workday
+from src.ats import CompanyRef, Job, workday
 from src.ats.models import AtsError
 from src.incremental import MAX_ENTRIES, STORE_NAME, SeenState, record_key
 from src.main import run

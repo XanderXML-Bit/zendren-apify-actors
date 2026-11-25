@@ -11,7 +11,7 @@ from src.seen import (
     LOCK_PREFIX, MAX_KEY_LENGTH, STORE_NAME, SeenStore, StateLock, StateLockedError, lock_key, record_key,
     today_days,
 )
-from tests.fakes import Platform, posting
+from tests.fakes import Platform
 from tests.helpers import board, go, ids
 
 START, JOB = D("0.00005"), D("0.0015")

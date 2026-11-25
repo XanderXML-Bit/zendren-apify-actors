@@ -1,10 +1,12 @@
-# Apify actors
+# Zendren Apify actors
 
-Python actors for developers who need public job feeds, page-cited PDF chunks, sitemap comparisons, or feed change detection.
+[![CI status on main](https://github.com/XanderXML-Bit/zendren-apify-actors/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/XanderXML-Bit/zendren-apify-actors/actions/workflows/ci.yml)
+
+Python actors for developers who collect public job postings, extract page-cited PDF text, or track changes in sitemaps and feeds.
 
 ## Choose an actor
 
-All six actors have public Apify Store pages, checked on 2026-11-06.
+All six actors have public Apify Store pages, checked on 2026-11-24.
 This repository is the public source for those actors.
 
 | Directory | Public actor | Purpose |
@@ -34,7 +36,15 @@ The document actors use Python 3.11, the Apify SDK, HTTPX, defusedxml, and pypdf
 Pytest runs the offline suites.
 Pytest-asyncio runs asynchronous job-feed tests with function-scoped fixture loops.
 Each directory contains a runtime pin and a hash-locked development dependency file.
-The lockfiles fix test environments, not the existing Docker production dependency resolution.
+The Docker builds install from separate production requirement files.
+
+## Architecture
+
+Each actor directory contains its own Dockerfile, Apify schemas, and dependency files.
+The PDF, sitemap, and feed actors each include a copy of `fetcher.py`.
+Its server-side request forgery (SSRF) guard rejects non-public addresses and checks every redirect before connecting.
+Each Docker build uses its actor directory as the build context.
+Keeping a copy of the fetcher in each directory puts the guard in every image that needs it.
 
 ## Set up a local actor
 
@@ -58,10 +68,12 @@ The commands below create an isolated environment for one actor.
 
    ```sh
    uv venv --python "$(cat .python-version)" .venv
-   uv pip sync --python .venv/bin/python requirements-dev.lock
+   uv pip sync --require-hashes --python .venv/bin/python requirements-dev.lock
    ```
 
 4. Run its offline tests and compile check.
+
+   Use Linux for the full suite. The document actors' parser subprocesses set resource limits that macOS rejects.
 
    ```sh
    .venv/bin/python -m pytest -q -m "not live" -p no:cacheprovider
@@ -72,6 +84,14 @@ Repeat steps two through four for each actor, starting from the repository root.
 Run each suite inside its actor directory because actors use separate module names.
 The `live` marker excludes tests that contact public job boards.
 Some parser tests skip when an optional tool is unavailable.
+
+## Lint the repository
+
+From the repository root, run Ruff to check for problems such as unused imports and undefined names.
+
+```sh
+uvx --from ruff==0.17.6 ruff check .
+```
 
 ## Run the offline feed example
 
@@ -88,7 +108,7 @@ It does not emulate Apify storage or platform charging.
 
 Deployment to the Apify platform is maintained separately and is not part of this repository.
 Do not run platform commands during offline setup, and keep tokens outside the repository.
-The [CI workflow](.github/workflows/ci.yml) runs offline tests and dependency audits on main pushes and pull requests.
+The [CI workflow](.github/workflows/ci.yml) runs lint, offline tests, and dependency audits on pushes to `main` and pull requests.
 
 ## Brand
 
